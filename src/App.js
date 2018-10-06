@@ -5,24 +5,35 @@ import Search from './Search'
 import './App.css'
 
 class BooksApp extends React.Component {
+  constructor(props){
+    super(props);
+    this.addToShelf = this.addToShelf.bind(this);
+    this.getShelf = this.getShelf.bind(this);
+
+    this.state = {
+      books: [],
+      showSearchPage: false
+    }
+  }
+
+
+
   componentDidMount(){
     BooksAPI.getAll().then(books => {
-      console.log(books);
       this.setState({
         books: books
       });
     })
   }
-  state = {
-    books: [],
-    showSearchPage: false
-    /*currentlyReading: ,
-    read: ,
-    wantToRead:*/
-  }
 
-  getShelf(shelf){
-    return this.state.books.filter(book => book.shelf == shelf);
+  getShelf = shelf => (this.state.books.filter(book => book.shelf === shelf))
+
+  addToShelf(book, shelf){
+    BooksAPI.update(book, shelf).then(books => {
+      this.setState({
+        books:books
+      });
+    })
   }
 
   render() {
@@ -32,8 +43,12 @@ class BooksApp extends React.Component {
           <Library
             currentlyReading={this.getShelf('currentlyReading')}
             wantToRead={this.getShelf('wantToRead')}
-            read={this.getShelf('read')}/>
-          <Search />
+            read={this.getShelf('read')}
+            addToShelf={this.addToShelf}/>
+          <Search
+            books={this.state.books}
+            addToShelf={this.addToShelf}
+          />
         </div>
       )}
   }
