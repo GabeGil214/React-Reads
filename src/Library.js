@@ -10,6 +10,7 @@ class Library extends React.Component {
         <div className="list-books">
           <div className="list-books-title">
             <h1>MyReads</h1>
+          </div>
             <Bookshelf
               books={this.props.currentlyReading}
               shelf='Currently Reading'
@@ -22,7 +23,6 @@ class Library extends React.Component {
               books={this.props.read}
               shelf='Finished Reading'
               />
-          </div>
           <div className="open-search">
             <Link to="/search">Add a book</Link>
           </div>
