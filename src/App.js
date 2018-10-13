@@ -1,6 +1,7 @@
 import React from 'react'
 import * as BooksAPI from './BooksAPI'
 import Library from './Library'
+import Landing from './Landing'
 import Search from './Search'
 import './App.css'
 
@@ -11,8 +12,7 @@ class BooksApp extends React.Component {
     this.getShelf = this.getShelf.bind(this);
 
     this.state = {
-      books: [],
-      showSearchPage: false
+      books: []
     }
   }
 
@@ -40,6 +40,7 @@ class BooksApp extends React.Component {
 
     return (
         <div className="app">
+          <Landing />
           <Library
             currentlyReading={this.getShelf('currentlyReading')}
             wantToRead={this.getShelf('wantToRead')}

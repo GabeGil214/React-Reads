@@ -1,8 +1,7 @@
 import React from 'react'
 import './App.css'
-import { Route } from 'react-router-dom'
+import { Route, Link } from 'react-router-dom'
 import Bookshelf from './Bookshelf'
-import { Link } from 'react-router-dom'
 
 class Library extends React.Component {
   render() {
@@ -25,7 +24,7 @@ class Library extends React.Component {
               />
           </div>
           <div className="open-search">
-            <Link to="/search" onClick={() => this.setState({ showSearchPage: true })}>Add a book</Link>
+            <Link to="/search">Add a book</Link>
           </div>
         </div>
       )} />
