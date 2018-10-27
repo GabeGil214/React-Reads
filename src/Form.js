@@ -23,10 +23,7 @@ class Form extends Component {
   }
 
   handleSubmit(e){
-    this.setState({
-      selectValue: e.target.value
-    })
-    BooksAPI.update(this.props.book, e.target.value);
+    this.props.addToShelf(this.props.book, e.target.value);
   }
 
   render(){
@@ -45,7 +42,8 @@ class Form extends Component {
 }
 
 Form.propTypes = {
-  book: propTypes.object.isRequired
+  book: propTypes.object.isRequired,
+  addToShelf: propTypes.func.isRequired
 }
 
 

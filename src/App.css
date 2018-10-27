@@ -136,6 +136,7 @@ body, .app {
 .book-top {
   position: relative;
   height: 200px;
+  background: rgba(120,120,120, 0.1);
   display: flex;
   align-items: flex-end;
 }
@@ -162,6 +163,13 @@ body, .app {
 
 form input {
   display: none;
+}
+
+.fa-book-open {
+  margin: 0 auto;
+  font-size: 32px;
+  position: relative;
+  bottom: 40%;
 }
 
 /* book cover */

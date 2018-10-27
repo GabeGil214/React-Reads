@@ -1,7 +1,6 @@
 import React from 'react'
 import * as BooksAPI from './BooksAPI'
 import Library from './Library'
-import Landing from './Landing'
 import Search from './Search'
 import './App.css'
 
@@ -16,8 +15,6 @@ class BooksApp extends React.Component {
     }
   }
 
-
-
   componentDidMount(){
     BooksAPI.getAll().then(books => {
       this.setState({
@@ -26,25 +23,35 @@ class BooksApp extends React.Component {
     })
   }
 
-  getShelf = shelf => (this.state.books.filter(book => book.shelf === shelf))
 
-  addToShelf(book, shelf){
-    BooksAPI.update(book, shelf).then(books => {
-      this.setState({
-        books:books
+    addToShelf(book, shelf){
+      BooksAPI.update(book, shelf);
+      const id = book.id;
+      const newShelf = shelf;
+      const newBooks = this.state.books.map(function(currBook){
+        if(currBook.id === id){
+          currBook.shelf = newShelf;
+        }
+        return currBook;
       });
-    })
-  }
+      this.setState({
+        books: newBooks
+      })
+    }
+
+  getShelf = shelf => (this.state.books.filter(book => book.shelf === shelf));
 
   render() {
+    // const currentlyReading = this.getShelf('currentlyReading');
+    // const read = this.getShelf('read');
+    // const wantToRead = this.getShelf('wantToRead');
 
     return (
         <div className="app">
-          <Landing />
           <Library
             currentlyReading={this.getShelf('currentlyReading')}
-            wantToRead={this.getShelf('wantToRead')}
             read={this.getShelf('read')}
+            wantToRead={this.getShelf('wantToRead')}
             addToShelf={this.addToShelf}/>
           <Search
             books={this.state.books}

@@ -19,7 +19,8 @@ class Bookshelf extends React.Component {
 }
 
 Bookshelf.propTypes = {
-  books: propTypes.array.isRequired
+  books: propTypes.array.isRequired,
+  addToShelf: propTypes.func.isRequired
 }
 
 export default Bookshelf;

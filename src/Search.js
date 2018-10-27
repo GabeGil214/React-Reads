@@ -1,51 +1,60 @@
 import React, { Component } from 'react'
 import { Route, Link } from 'react-router-dom'
 import propTypes from 'prop-types'
+import { debounce } from 'throttle-debounce'
+import * as BooksAPI from './BooksAPI'
 import Bookshelf from './Bookshelf'
 import './App.css'
 
 class Search extends Component {
-
-  static propTypes = {
-    books: propTypes.array.isRequired,
-    addToShelf: propTypes.func.isRequired
+  constructor(props) {
+    super(props);
+    this.updateResults = debounce(150, this.updateResults);
+    this.state = {
+      query: '',
+      books: []
+    }
   }
 
-  state = {
-    query: ''
+  handleChange(e) {
+    this.updateResults(e.target.value);
+    this.setState({
+      query: e.target.value
+    })
   }
 
-  updateQuery = (query) => {
+  updateResults = (query) => {
+    BooksAPI.search(query).then(books => {
+      Array.isArray(books) ?
       this.setState({
-      query: query.trim()
+        books: books
+      }) :
+      this.setState({
+        books: []
+      })
     })
   }
 
   render() {
-    const { query } = this.state;
-    const { books, addToShelf } = this.props;
-
-    const showingBooks = query === '' ? books
-    : books.filter((book) => (
-      book.title.toLowerCase().includes(query.toLowerCase())
-    ))
+    const { query, books } = this.state;
+    const { addToShelf } = this.props;
 
     return (
       <Route exact path='/search' render = {() => (
         <div className="search-books">
           <div className="search-books-bar">
-            <Link to="/Library" className="close-search">Close</Link>
+            <Link to="/" className="close-search">Close</Link>
             <div className="search-books-input-wrapper">
               <input
                 type="text"
                 placeholder="Search by title or author"
-                value={this.state.query}
-                onChange={(event) => this.updateQuery(event.target.value)}/>
+                value={query ? query : ''}
+                onChange={this.handleChange.bind(this)}/>
             </div>
           </div>
           <div className="search-books-results">
             <Bookshelf
-              books={showingBooks}
+              books={books ? books : []}
               addToShelf={addToShelf}
               />
           </div>
@@ -53,6 +62,10 @@ class Search extends Component {
       )} />
     )
   }
+}
+
+Search.propTypes = {
+  addToShelf: propTypes.func.isRequired
 }
 
 export default Search
