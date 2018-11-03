@@ -24,20 +24,30 @@ class Search extends Component {
   }
 
   updateResults = (query) => {
-    BooksAPI.search(query).then(books => {
-      Array.isArray(books) ?
-      this.setState({
-        books: books
-      }) :
+
+    if (query === '' || query === undefined){
       this.setState({
         books: []
       })
-    })
+    } else {
+      BooksAPI.search(query).then(books => {
+        Array.isArray(books) ?
+        this.setState({
+          books: books
+        }) :
+        this.setState({
+          books: []
+        });
+      })
+    }
+
+
+
   }
 
   render() {
     const { query, books } = this.state;
-    const { addToShelf } = this.props;
+    const { addToShelf, library } = this.props;
 
     return (
       <Route exact path='/search' render = {() => (
@@ -54,6 +64,7 @@ class Search extends Component {
           </div>
           <div className="search-books-results">
             <Bookshelf
+              library={library}
               books={books ? books : []}
               addToShelf={addToShelf}
               />
@@ -65,6 +76,7 @@ class Search extends Component {
 }
 
 Search.propTypes = {
+  library: propTypes.array.isRequired,
   addToShelf: propTypes.func.isRequired
 }
 

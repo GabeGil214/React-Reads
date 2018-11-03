@@ -3,19 +3,18 @@ import './App.css'
 import Book from './Book'
 import propTypes from 'prop-types'
 
-class Bookshelf extends React.Component {
-  render() {
+function Bookshelf(props) {
     return (
       <div className="list-books-content">
         <div className="bookshelf">
-          <h2 className="bookshelf-title">{this.props.shelf}</h2>
+          <h2 className="bookshelf-title">{props.shelf}</h2>
             <Book
-              books={this.props.books}
-              addToShelf={this.props.addToShelf}/>
+              books={props.books}
+              addToShelf={props.addToShelf}
+              library={props.library ? props.library : []}/>
         </div>
       </div>
     )
-  }
 }
 
 Bookshelf.propTypes = {

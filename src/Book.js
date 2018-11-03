@@ -22,12 +22,23 @@ class Book extends Component {
                       <i className="fas fa-book-open"></i>
                     )}
                     <div className="book-shelf-changer">
-                      <Form book={book}
-                        addToShelf={this.props.addToShelf}/>
+                      <Form
+                        library={this.props.library}
+                        book={book}
+                        addToShelf={this.props.addToShelf}
+                        />
                     </div>
                   </div>
                   <div className="book-title">{book.title}</div>
-                  <div className="book-authors">{book.authors ? book.authors[0] : ''}</div>
+                  <div className="book-authors"><p>{book.authors ? book.authors.reduce(function(acc, currValue, i, array) {
+                      if(i === array.length && i === 1){
+                        return acc;
+                      } else if(i === array.length && i !== 1){
+                        return acc + currValue;
+                      } else {
+                        return acc + ", " + currValue;
+                      }
+                  }) : ''}</p></div>
                 </div>
               </li>
             ))) : (

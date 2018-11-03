@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import './App.css';
 import propTypes from 'prop-types'
-import * as BooksAPI from './BooksAPI'
 
 
 class Form extends Component {
@@ -10,20 +9,29 @@ class Form extends Component {
     super(props)
     this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
-      selectValue: ''
+      selectValue: 'none'
     }
   }
 
   componentDidMount(){
-    BooksAPI.get(this.props.book.id).then(book => {
+    var inLibrary = this.props.library.filter((book) => (
+      book.id === this.props.book.id
+    ))
+
+    if(inLibrary.length){
+      var shelf = inLibrary[0].shelf;
       this.setState({
-        selectValue: book.shelf
+        selectValue: shelf
       });
-    })
+    }
+
   }
 
   handleSubmit(e){
     this.props.addToShelf(this.props.book, e.target.value);
+    this.setState({
+      selectValue: e.target.value
+    });
   }
 
   render(){

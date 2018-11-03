@@ -7,7 +7,7 @@ import Bookshelf from './Bookshelf'
 class Library extends React.Component {
 
   render() {
-    const { addToShelf, currentlyReading, read, wantToRead } = this.props;
+    const { addToShelf, currentlyReading, read, wantToRead, library } = this.props;
 
     const shelves = {
       currentlyReading: {
@@ -38,6 +38,7 @@ class Library extends React.Component {
               books={shelves[shelf].books}
               shelf={shelves[shelf].title}
               addToShelf={addToShelf}
+              library={library}
               />
           )}
           <div className="open-search">

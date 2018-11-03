@@ -27,24 +27,26 @@ class BooksApp extends React.Component {
     addToShelf(book, shelf){
       BooksAPI.update(book, shelf);
       const id = book.id;
-      const newShelf = shelf;
-      const newBooks = this.state.books.map(function(currBook){
+      var newBooks;
+      if(!this.state.books.includes(book)){
+        newBooks = this.state.books.concat(book);
+      } else {
+        newBooks = this.state.books;
+      }
+      const newState = newBooks.map(function(currBook){
         if(currBook.id === id){
-          currBook.shelf = newShelf;
+          currBook.shelf = shelf;
         }
         return currBook;
       });
       this.setState({
-        books: newBooks
+        books: newState
       })
     }
 
   getShelf = shelf => (this.state.books.filter(book => book.shelf === shelf));
 
   render() {
-    // const currentlyReading = this.getShelf('currentlyReading');
-    // const read = this.getShelf('read');
-    // const wantToRead = this.getShelf('wantToRead');
 
     return (
         <div className="app">
@@ -52,9 +54,11 @@ class BooksApp extends React.Component {
             currentlyReading={this.getShelf('currentlyReading')}
             read={this.getShelf('read')}
             wantToRead={this.getShelf('wantToRead')}
-            addToShelf={this.addToShelf}/>
+            addToShelf={this.addToShelf}
+            library={this.state.books}
+            />
           <Search
-            books={this.state.books}
+            library={this.state.books}
             addToShelf={this.addToShelf}
           />
         </div>
