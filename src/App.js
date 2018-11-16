@@ -3,6 +3,7 @@ import * as BooksAPI from './BooksAPI'
 import Library from './Library'
 import Search from './Search'
 import './App.css'
+import Landing from './Landing'
 
 class BooksApp extends React.Component {
   constructor(props){
@@ -50,6 +51,7 @@ class BooksApp extends React.Component {
 
     return (
         <div className="app">
+          <Landing />
           <Library
             currentlyReading={this.getShelf('currentlyReading')}
             read={this.getShelf('read')}

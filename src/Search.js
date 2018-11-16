@@ -53,7 +53,7 @@ class Search extends Component {
       <Route exact path='/search' render = {() => (
         <div className="search-books">
           <div className="search-books-bar">
-            <Link to="/" className="close-search">Close</Link>
+            <Link to="/library" className="close-search">Close</Link>
             <div className="search-books-input-wrapper">
               <input
                 type="text"

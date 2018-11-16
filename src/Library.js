@@ -27,7 +27,7 @@ class Library extends React.Component {
       }
     }
     return (
-      <Route exact path='/' render = {() => (
+      <Route exact path='/library' render = {() => (
         <div className="list-books">
           <div className="list-books-title">
             <h1>MyReads</h1>
